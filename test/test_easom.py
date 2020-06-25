@@ -2,9 +2,9 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
-from pso import *
+from pso_solver import *
 
-set_seed(1)
+# set_seed(1)
 
 lower = xlower = ylower = 0
 upper = xupper = yupper = 6.28

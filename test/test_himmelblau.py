@@ -2,7 +2,7 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
-from pso import *
+from pso_solver import *
 
 set_seed(4)
 

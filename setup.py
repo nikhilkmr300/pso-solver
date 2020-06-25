@@ -4,12 +4,12 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="pso",
+    name="pso_solver",
     version="0.0.1",
     author="Nikhil Kumar",
     author_email="nikhilkmr300@gmail.com",
     description="A package that implements the particle swarm optimization algorithm",
-    url="https://github.com/nikhilkmr300/pso",
+    url="https://github.com/nikhilkmr300/pso_solver",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
