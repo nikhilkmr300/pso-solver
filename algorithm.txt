@@ -1,0 +1,51 @@
+Define y = f(x) as the function to be minimized,
+where x = (x_1, x_2, ... , x_n),
+i.e., f(x) is a function of n variables.
+
+Definitions:
+  Position x: A tuple of n floats, representing coordinates in n-dimensional
+    space.
+
+  Personal best position pBestPos: Position of the Particle object that gives
+    minimum value of f among all positions in the iterations upto the current one.
+
+  Global best position gBestPos: Among all pBestPos of all the Particle objects,
+    the pBestPos that gives the minimum value of f.
+
+  Velocity v: Value by which position is updated in each iteration. Each particle
+    has its own velocity, which changes iteration to iteration.
+    Velocity in ith iteration = v_i
+    v_{i+1} = W * v_i + c_1 * rand(0,1) * (pBestPos_i - x_i) + c_2 * rand(0,1) * (gBestPos_i - x_i)
+    where W = Weight/inertia factor
+          c_1 = Local learning factor
+          c_2 = Global learning factor
+    Position is updated as x_{i+1} = x_i + v_{i+1}
+
+  Particle: Values of [x] in the search space, whose values are modified in each
+    iteration. Implemented as an object of the Particle class.
+
+Steps:
+1.  Define a class Particle with the following attributes:
+    # Current position of the particle
+    currPos: n-tuple(float)
+
+    # Position (out of all positions particle has traversed) that minimizes f
+    pBestPos: n-tuple(float)
+
+    # Velocity
+    vel: n-tuple(float)
+
+2.  Initialization for each Particle object
+    Initialize currPos to a random vector over the search space.
+    Initialize velocity v_0 to 0.
+    Initialize pBestPos to currPos.
+
+3.  Initialize gBestPos to the pBestPos that minimizes f.
+
+4.  Iterate for numIters number of iterations
+    a.  For each particle
+        i.  Find v_{i+1} using the formula above.
+        ii. Update currPos using the formula above.
+        iii.Update pBestPos to currPos if f(currPos) < f(pBestPos)
+
+    b.  Update gBestPos to the pBestPos among all particles that minimizes f.
