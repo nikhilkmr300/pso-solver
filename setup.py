@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pso_solver",
-    version="0.0.1",
+    version="0.0.2",
     author="Nikhil Kumar",
     author_email="nikhilkmr300@gmail.com",
     description="A package that implements the particle swarm optimization algorithm",
