@@ -9,7 +9,7 @@ setuptools.setup(
     author="Nikhil Kumar",
     author_email="nikhilkmr300@gmail.com",
     description="A package that implements the particle swarm optimization algorithm",
-    url="https://github.com/nikhilkmr300/ising2D",
+    url="https://github.com/nikhilkmr300/pso",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
