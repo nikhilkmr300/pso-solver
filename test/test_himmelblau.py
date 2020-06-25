@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from pso_solver import *
 
-set_seed(4)
+setSeed(1)
 
 lower = xlower = ylower = -4
 upper = xupper = yupper = 4
