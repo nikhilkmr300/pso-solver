@@ -41,7 +41,7 @@ class Particle:
         """
         return f'currPos: {self.currPos} pBestPos: {self.pBestPos} vel: {self.vel}'
 
-def set_seed(seed=None):
+def setSeed(seed=None):
     """
     Sets seed for random number generators. Use this function to set the seed in
     your program before calling any function that uses a PRNG if you want to get
@@ -162,6 +162,7 @@ def extractCurrPos(particleList):
     list: List of currPos of the Particle objects in particleList, in the same
         order as the input.
     """
+
     return [particle.currPos for particle in particleList]
 
 def extractPBestPos(particleList):
@@ -175,6 +176,7 @@ def extractPBestPos(particleList):
     list: List of pBestPos of the Particle objects in particleList, in the same
         order as the input.
     """
+
     return [particle.pBestPos for particle in particleList]
 
 def findGBestPos(f, particleList, accuracy=2):
@@ -198,6 +200,7 @@ def findGBestPos(f, particleList, accuracy=2):
                     particleList that gives maximum value of f
                 globalMaxVal: Value of f at globalMax.
     """
+    
     pBestPosList = extractPBestPos(particleList)
     # fValues is the list of values of f at all pBestPos of pBestPosList
     fValues = [(evaluateF(f, pBestPos), pBestPos) for pBestPos in pBestPosList]
