@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
     name="pso_solver",
-    version="0.1.0",
+    version="0.1.1",
     author="Nikhil Kumar",
     author_email="nikhilkmr300@gmail.com",
     description="A package that implements the particle swarm optimization algorithm and provides visualizations.",
