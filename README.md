@@ -40,7 +40,8 @@ To obtain the above minima, use seed=1, seed=7, seed=3, seed=4, respectively, fo
 
 10 particles, 50 iterations, c1=1, c2=1, W=0.5
 
-<img src="https://github.com/nikhilkmr300/pso_solver/blob/master/images/himmelblau_1.png" width="320" height="240"><img src="https://github.com/nikhilkmr300/pso_solver/blob/master/images/himmelblau_3.png" width="320" height="240"><img src="https://github.com/nikhilkmr300/pso_solver/blob/master/images/himmelblau_4.png" width="320" height="240"><img src="https://github.com/nikhilkmr300/pso_solver/blob/master/images/himmelblau_7.png" width="320" height="240">
+<img src="https://github.com/nikhilkmr300/pso_solver/blob/master/images/himmelblau_1.png" width="320" height="240"><img src="https://github.com/nikhilkmr300/pso_solver/blob/master/images/himmelblau_3.png" width="320" height="240">
+<img src="https://github.com/nikhilkmr300/pso_solver/blob/master/images/himmelblau_4.png" width="320" height="240"><img src="https://github.com/nikhilkmr300/pso_solver/blob/master/images/himmelblau_7.png" width="320" height="240">
 
 Particles approaching each of the 4 minima of the Himmelblau function.
 
