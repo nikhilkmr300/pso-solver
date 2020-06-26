@@ -431,7 +431,7 @@ def psoVisualizeUnivariate(particleList, f, xlower, xupper, c1=1, c2=1, W=0.5, n
         print('(maximum, maximumValue):\t', end='')
         printGBestPos(particleList, f, maxFlag=True, accuracy=accuracy)
 
-def generatePlotBivariate(particleList, f, xlower, xupper, ylower, yupper, density=100, cmap='Oranges', particleColor='r'):
+def generatePlotBivariate(particleList, f, xlower, xupper, ylower, yupper, density=100, cmap='Blues', particleColor='r'):
     """
     Generates scatter plot of particles and contour plot of f.
 
@@ -480,7 +480,7 @@ def generatePlotBivariate(particleList, f, xlower, xupper, ylower, yupper, densi
 
     return fig, ax
 
-def displayPlotBivariate(particleList, f, xlower, xupper, ylower, yupper, sleepTime=0.1, density=100, cmap='Oranges', particleColor='r'):
+def displayPlotBivariate(particleList, f, xlower, xupper, ylower, yupper, sleepTime=0.1, density=100, cmap='Blues', particleColor='r'):
     """
     Displays scatter plot of particles and contour plot of f created by
     generatePlotBivariate.
@@ -504,7 +504,7 @@ def displayPlotBivariate(particleList, f, xlower, xupper, ylower, yupper, sleepT
     plt.pause(sleepTime)
     plt.close()
 
-def psoVisualizeBivariate(particleList, f, xlower, xupper, ylower, yupper, c1=1, c2=1, W=0.5, numIters=10, maxFlag=False, sleepTime=0.1, density=100, cmap='Oranges', particleColor='r', accuracy=2, verbose=False):
+def psoVisualizeBivariate(particleList, f, xlower, xupper, ylower, yupper, c1=1, c2=1, W=0.5, numIters=10, maxFlag=False, sleepTime=0.1, density=100, cmap='Blues', particleColor='r', accuracy=2, verbose=False):
     """
     Finds minimum or maximum (set maxFlag to True) of function f of 2 variables
     using the PSO algorithm and provides a nice visualization of the motion of
