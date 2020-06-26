@@ -18,4 +18,4 @@ particleList = pso_solver.createRandomParticleList(2, numParticles=10, lower=low
 # seed = 4 gives mimimum (3, 2)
 f = lambda x, y: (x**2 + y - 11)**2 + (x + y**2 - 7)**2
 
-pso_solver.psoVisualize(particleList, f, xlower, xupper, ylower, yupper, c1=1, c2=1, W=0.5, numIters=50, maxFlag=False, sleepTime=0.1, density=1000, accuracy=2, verbose=False)
+pso_solver.psoVisualizeBivariate(particleList, f, xlower, xupper, ylower, yupper, c1=1, c2=1, W=0.5, numIters=50, maxFlag=False, sleepTime=0.1, density=1000, accuracy=2, verbose=False)

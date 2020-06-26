@@ -200,7 +200,7 @@ def findGBestPos(f, particleList, accuracy=2):
                     particleList that gives maximum value of f
                 globalMaxVal: Value of f at globalMax.
     """
-    
+
     pBestPosList = extractPBestPos(particleList)
     # fValues is the list of values of f at all pBestPos of pBestPosList
     fValues = [(evaluateF(f, pBestPos), pBestPos) for pBestPos in pBestPosList]
@@ -313,9 +313,9 @@ def pso(particleList, f, c1=1, c2=1, W=0.5, numIters=10, maxFlag=False, accuracy
         print('(maximum, maximumValue):\t', end='')
         printGBestPos(particleList, f, maxFlag=True, accuracy=accuracy)
 
-def generateContourPlot(particleList, f, xlower, xupper, ylower, yupper, sleepTime=0.1, density=100, cmap='Oranges', particleColor='k'):
+def generatePlotUnivariate(particleList, f, xlower, xupper, density=100, fColor='b', particleColor='r'):
     """
-    Plots particles and contour plot of f.
+    Generates scatter plot of particles and contour plot of f.
 
     Parameters:
     particleList (list): A list of particles, must be initialized before feeding
@@ -323,42 +323,57 @@ def generateContourPlot(particleList, f, xlower, xupper, ylower, yupper, sleepTi
     f (lambda): Function to be globally minimized/maximized.
     xlower (float): Lower bound for x-axis in plot.
     xupper (float): Upper bound for x-axis in plot.
-    ylower (float): Lower bound for y-axis in plot.
-    yupper (float): Upper bound for y-axis in plot.
-    sleepTime (float, optional): Time in milliseconds to wait between plotting successive
-        iterations of the PSO algorithm.
-    density (int, optional): Density of points to take for the contour plot, think of this
-      as resolution, higher the density, more the points taken to plot the
-      contour plot.
-    cmap (str or matplotlib.pyplot.Colormap, optional): Colormap to be used for the
-        contour plot.
+    density (int, optional): Density of points to take for plotting the
+        function, think of this as resolution, higher the density, more the
+        points taken to plot the function.
+    fColor (str, optional): Color to be used for plotting the function.
     particleColor (str, optional): Colour in which to plot particles.
+
+    Returns:
+    tuple: Tuple of matplotlib.pyplot.Figure() object and matplotlib.axes.Axes()
+        object
+    """
+
+    fig, ax = plt.subplots(1, 1)
+
+    # Plotting baseline
+    plt.xlim(xlower, xupper)
+    plt.plot([xlower, xupper], [0, 0], color='k')
+
+    # Plotting function
+    X = np.linspace(xlower, xupper, density)
+    plt.plot(X, f(X), color=fColor)
+
+    # Plotting particles
+    currPosList = extractCurrPos(particleList)
+    plt.scatter(currPosList, [0] * len(currPosList), color=particleColor)
+
+    # Plotting lines from particle to function value
+    particleY = [f(x) for x in currPosList]
+    for x, y in zip(currPosList, particleY):
+        plt.plot([*x, *x], [0, *y], color='k', linestyle='--')
+
+    plt.xlabel('x')
+    plt.ylabel('f(x)')
+
+    return fig, ax
+
+def displayPlotUnivariate(particleList, f, xlower, xupper, sleepTime=0.1, density=100, fColor='b', particleColor='r'):
+    """
+    Displays scatter plot of particles and contour plot of f created by
+    generatePlotUnivariate.
+
+    Parameters:
+    Same as for generatePlotUnivariate.
+    sleepTime (float, optional): Time in milliseconds to wait between plotting
+        successive iterations of the PSO algorithm.
 
     Returns:
     None
     """
 
-    # Meshgrid for the contour plot
-    X, Y = np.meshgrid(np.linspace(xlower, xupper, density), np.linspace(ylower, yupper, density))
-
-    # Generating contour plot
-    currPosList = extractCurrPos(particleList)
-    fig, ax = plt.subplots(1, 1)
-    contourPlot = ax.contourf(X, Y, f(X, Y), cmap=cmap)
-    # Adding colorbar
-    fig.colorbar(contourPlot)
-
-    # Plotting particles
-    particleX = [position[0] for position in currPosList]
-    particleY = [position[1] for position in currPosList]
-    plt.scatter(particleX, particleY, color=particleColor)
-
-    # Setting aspect ratio, axes labels and axes limits
-    ax.set_aspect('equal', adjustable='box')
-    plt.xlabel('x')
-    plt.ylabel('y')
-    plt.xlim(xlower, xupper)
-    plt.ylim(ylower, yupper)
+    # Generating the plot
+    fig, ax = generatePlotUnivariate(particleList, f, xlower, xupper, density=density, fColor=fColor, particleColor=particleColor)
 
     # Displaying plot
     plt.show(block=False)
@@ -367,20 +382,21 @@ def generateContourPlot(particleList, f, xlower, xupper, ylower, yupper, sleepTi
     plt.pause(sleepTime)
     plt.close()
 
-def psoVisualize(particleList, f, xlower, xupper, ylower, yupper, c1=1, c2=1, W=0.5, numIters=10, maxFlag=False, sleepTime=0.1, density=100, cmap='Oranges', particleColor='k', accuracy=2, verbose=False):
+def psoVisualizeUnivariate(particleList, f, xlower, xupper, c1=1, c2=1, W=0.5, numIters=10, maxFlag=False, sleepTime=0.1, density=100, fColor='b', particleColor='r', accuracy=2, verbose=False):
     """
-    Finds minimum or maximum (set maxFlag to True) of function f using the PSO
-    algorithm and provides a nice visualization of the motion of the particles.
+    Finds minimum or maximum (set maxFlag to True) of function f of 1 variable
+    using the PSO algorithm and provides a nice visualization of the motion of
+    the particles.
 
     Parameters:
-    Same as for pso and generateContourPlot.
+    Same as for pso.
 
     Returns:
     None
     """
 
-    if(len(signature(f).parameters) != 2):
-        print('Error: psoVisualize is available only for functions of two variables.')
+    if(len(signature(f).parameters) != 1):
+        print('Error: psoVisualizeUnivariate accepts only functions of 1 variable.')
         sys.exit()
 
     print(f'Particle swarm optimization, {len(particleList)} particles, {numIters} iterations:')
@@ -400,13 +416,135 @@ def psoVisualize(particleList, f, xlower, xupper, ylower, yupper, c1=1, c2=1, W=
             # Printing summary of current iteration
             printParticleListBrief(particleList, f, maxFlag=maxFlag, accuracy=accuracy)
             print('-' * 10)
-            generateContourPlot(particleList, f, xlower, xupper, ylower, yupper, sleepTime=sleepTime, density=density, cmap=cmap, particleColor=particleColor)
+            displayPlotUnivariate(particleList, f, xlower, xupper, sleepTime=sleepTime, density=density, fColor=fColor, particleColor=particleColor)
     # Taking numIters number of steps of the PSO algorithm (not verbose)
     elif(verbose == False):
         for i in tqdm(range(numIters)):
             # Taking a step of the PSO algorithm
             particleList = pso_step(particleList, f, c1=c1, c2=c2, W=W, maxFlag=maxFlag, accuracy=accuracy)
-            generateContourPlot(particleList, f, xlower, xupper, ylower, yupper, sleepTime=sleepTime, density=density, cmap=cmap, particleColor=particleColor)
+            displayPlotUnivariate(particleList, f, xlower, xupper, sleepTime=sleepTime, density=density, fColor=fColor, particleColor=particleColor)
+
+    if(maxFlag == False):
+        print('(minimum, minimimumValue):\t', end='')
+        printGBestPos(particleList, f, maxFlag=False, accuracy=accuracy)
+    elif(maxFlag == True):
+        print('(maximum, maximumValue):\t', end='')
+        printGBestPos(particleList, f, maxFlag=True, accuracy=accuracy)
+
+def generatePlotBivariate(particleList, f, xlower, xupper, ylower, yupper, density=100, cmap='Oranges', particleColor='r'):
+    """
+    Generates scatter plot of particles and contour plot of f.
+
+    Parameters:
+    particleList (list): A list of particles, must be initialized before feeding
+        into this function.
+    f (lambda): Function to be globally minimized/maximized.
+    xlower (float): Lower bound for x-axis in plot.
+    xupper (float): Upper bound for x-axis in plot.
+    ylower (float): Lower bound for y-axis in plot.
+    yupper (float): Upper bound for y-axis in plot.
+    density (int, optional): Density of points to take for the contour plot, think of this
+      as resolution, higher the density, more the points taken to plot the
+      contour plot.
+    cmap (str or matplotlib.pyplot.Colormap, optional): Colormap to be used for the
+        contour plot.
+    particleColor (str, optional): Colour in which to plot particles.
+
+    Returns:
+    tuple: Tuple of matplotlib.pyplot.Figure() object and matplotlib.axes.Axes()
+        object
+    """
+
+    fig, ax = plt.subplots(1, 1)
+
+    # Meshgrid for the contour plot
+    X, Y = np.meshgrid(np.linspace(xlower, xupper, density), np.linspace(ylower, yupper, density))
+
+    # Generating contour plot
+    currPosList = extractCurrPos(particleList)
+    contourPlot = ax.contourf(X, Y, f(X, Y), cmap=cmap)
+    # Adding colorbar
+    fig.colorbar(contourPlot)
+
+    # Plotting particles
+    particleX = [position[0] for position in currPosList]
+    particleY = [position[1] for position in currPosList]
+    plt.scatter(particleX, particleY, color=particleColor)
+
+    # Setting aspect ratio, axes labels and axes limits
+    ax.set_aspect('equal', adjustable='box')
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.xlim(xlower, xupper)
+    plt.ylim(ylower, yupper)
+
+    return fig, ax
+
+def displayPlotBivariate(particleList, f, xlower, xupper, ylower, yupper, sleepTime=0.1, density=100, cmap='Oranges', particleColor='r'):
+    """
+    Displays scatter plot of particles and contour plot of f created by
+    generatePlotBivariate.
+
+    Parameters:
+    Same as for generatePlotBivariate.
+    sleepTime (float, optional): Time in milliseconds to wait between plotting
+        successive iterations of the PSO algorithm.
+
+    Returns:
+    None
+    """
+
+    # Generating the plot
+    fig, ax = generatePlotBivariate(particleList, f, xlower, xupper, ylower, yupper, density=density, cmap=cmap, particleColor=particleColor)
+
+    # Displaying plot
+    plt.show(block=False)
+
+    # Waiting for sleepTime milliseconds before plotting next iteration
+    plt.pause(sleepTime)
+    plt.close()
+
+def psoVisualizeBivariate(particleList, f, xlower, xupper, ylower, yupper, c1=1, c2=1, W=0.5, numIters=10, maxFlag=False, sleepTime=0.1, density=100, cmap='Oranges', particleColor='r', accuracy=2, verbose=False):
+    """
+    Finds minimum or maximum (set maxFlag to True) of function f of 2 variables
+    using the PSO algorithm and provides a nice visualization of the motion of
+    the particles.
+
+    Parameters:
+    Same as for pso and displayPlotBivariate.
+
+    Returns:
+    None
+    """
+
+    if(len(signature(f).parameters) != 2):
+        print('Error: psoVisualizeBivariate accepts only functions of 2 variables.')
+        sys.exit()
+
+    print(f'Particle swarm optimization, {len(particleList)} particles, {numIters} iterations:')
+    print('-' * 10)
+
+    # Taking numIters number of steps of the PSO algorithm (verbose)
+    if(verbose == True):
+        # Printing initial state
+        print('Initial state:')
+        printParticleListBrief(particleList, f, accuracy=accuracy)
+        print('-' * 10)
+        # Taking numIters number of steps of the PSO algorithm (verbose)
+        for i in range(numIters):
+            print(f'Iteration {(i + 1)}/{numIters}:')
+            # Taking a step of the PSO algorithm
+            particleList = pso_step(particleList, f, c1=c1, c2=c2, W=W, maxFlag=maxFlag, accuracy=accuracy)
+            # Printing summary of current iteration
+            printParticleListBrief(particleList, f, maxFlag=maxFlag, accuracy=accuracy)
+            print('-' * 10)
+            displayPlotBivariate(particleList, f, xlower, xupper, ylower, yupper, sleepTime=sleepTime, density=density, cmap=cmap, particleColor=particleColor)
+    # Taking numIters number of steps of the PSO algorithm (not verbose)
+    elif(verbose == False):
+        for i in tqdm(range(numIters)):
+            # Taking a step of the PSO algorithm
+            particleList = pso_step(particleList, f, c1=c1, c2=c2, W=W, maxFlag=maxFlag, accuracy=accuracy)
+            displayPlotBivariate(particleList, f, xlower, xupper, ylower, yupper, sleepTime=sleepTime, density=density, cmap=cmap, particleColor=particleColor)
 
     if(maxFlag == False):
         print('(minimum, minimimumValue):\t', end='')

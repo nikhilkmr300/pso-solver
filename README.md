@@ -1,5 +1,5 @@
 # pso_solver
-A package that implements the particle swarm optimization algorithm. 
+A package that implements the particle swarm optimization algorithm.
 Particle swarm optimization (PSO) is a computational technique used to find the global optimum of a function,
 introduced in 1995 by Kennedy and Eberhardt.
 Candidate solutions for the optimum of the function, called particles, are initialized in the search space randomly,
@@ -24,12 +24,13 @@ Use the command `pip install pso-solver` to install the package.
 
 # Description of functions
 Here is a description of the functions that you might want to use in your code:
-* createParticleList: Takes a list of initial positions and returns a list of particles in particleList initialized to those positions. 
+* createParticleList: Takes a list of initial positions and returns a list of particles in particleList initialized to those positions.
 pBestPos of each particle is initialized to position passed in the list.
 * createRandomParticleList: Returns a list of particles with randomly initialized positions.
 * pso: Finds minimum or maximum (set maxFlag to True) of function f using the PSO algorithm.
-* psoVisualize: Finds minimum or maximum (set maxFlag to True) of function f using the PSO algorithm and provides a nice visualization of the motion of the particles.
-* setSeed: Sets seed for random number generators. 
+* psoVisualizeUnivariate: Finds minimum or maximum (set maxFlag to True) of function f of 1 variable using the PSO algorithm and provides a nice visualization of the motion of the particles.
+* psoVisualizeBivariate: Finds minimum or maximum (set maxFlag to True) of function f of 2 variables using the PSO algorithm and provides a nice visualization of the motion of the particles.
+* setSeed: Sets seed for random number generators.
 Use this function to set the seed in your program before calling any function that uses a PRNG if you want to get reproducible results.
 
 Documentation is part of the source code file as PEP8 comments.
