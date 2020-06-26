@@ -45,6 +45,8 @@ To obtain the above minima, use seed=1, seed=7, seed=3, seed=4, respectively, fo
 
 Particles approaching each of the 4 minima of the Himmelblau function.
 
+Reference: https://en.wikipedia.org/wiki/Himmelblau%27s_function
+
 # Installation
 Install `pip` if you do not have it already. Refer https://pip.pypa.io/en/stable/installing/.
 Use the command `pip install pso-solver` to install the package.
