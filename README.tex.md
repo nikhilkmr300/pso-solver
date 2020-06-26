@@ -18,6 +18,32 @@ Selecting the best parameters c1, c2 and W is experimental, and has to be done t
 Reference:
 Eberhart, R., & Kennedy, J. (1995, November). Particle swarm optimization. In Proceedings of the IEEE international conference on neural networks (Vol. 4, pp. 1942-1948). Citeseer.
 
+# Examples
+
+## Cosine function
+10 particles, 50 iterations, c1=1, c2=1, W=0.5
+
+<img src="https://github.com/nikhilkmr300/pso_solver/blob/master/images/cosine.png" width="320" height="240">
+
+Particles approaching the minimum of the cosine function in the range 0 to 2$\pi$.
+
+## Himmelblau function
+
+The Himmelblau function is defined by $f(x, y) = (x^2 + y - 11)^2 + (x + y^2 - 7)^2$.
+It has 4 minima:
+* (-2.81, 3.13)
+* (-3, 2)
+* (3.58, -1.85)
+* (3, 2)
+
+To obtain the above minima, use seed=1, seed=7, seed=3, seed=4, respectively, for 10 particles.
+
+10 particles, 50 iterations, c1=1, c2=1, W=0.5
+
+<img src="https://github.com/nikhilkmr300/pso_solver/blob/master/images/himmelblau_1.png" width="320" height="240"><img src="https://github.com/nikhilkmr300/pso_solver/blob/master/images/himmelblau_3.png" width="320" height="240"><img src="https://github.com/nikhilkmr300/pso_solver/blob/master/images/himmelblau_4.png" width="320" height="240"><img src="https://github.com/nikhilkmr300/pso_solver/blob/master/images/himmelblau_7.png" width="320" height="240">
+
+Particles approaching each of the 4 minima of the Himmelblau function.
+
 # Installation
 Install `pip` if you do not have it already. Refer https://pip.pypa.io/en/stable/installing/.
 Use the command `pip install pso-solver` to install the package.
