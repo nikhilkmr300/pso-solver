@@ -1,14 +1,12 @@
 import setuptools
 
-with open("README.md", "r") as fh:
-    long_description = fh.read()
-
 setuptools.setup(
     name="pso_solver",
-    version="0.0.3",
+    version="0.0.4",
     author="Nikhil Kumar",
     author_email="nikhilkmr300@gmail.com",
-    description="A package that implements the particle swarm optimization algorithm",
+    description="A package that implements the particle swarm optimization algorithm.",
+    long_description="Refer https://github.com/nikhilkmr300/pso_solver/blob/master/README.md for description.",
     url="https://github.com/nikhilkmr300/pso_solver",
     packages=setuptools.find_packages(),
     classifiers=[
