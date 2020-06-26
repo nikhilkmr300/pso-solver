@@ -36,8 +36,6 @@ It has 4 minima:
 * (3.58, -1.85)
 * (3, 2)
 
-To obtain the above minima, use seed=1, seed=7, seed=3, seed=4, respectively, for 10 particles.
-
 10 particles, 50 iterations, c1=1, c2=1, W=0.5
 
 <img src="https://github.com/nikhilkmr300/pso_solver/blob/master/images/himmelblau_1.png" width="320" height="240"><img src="https://github.com/nikhilkmr300/pso_solver/blob/master/images/himmelblau_3.png" width="320" height="240">
