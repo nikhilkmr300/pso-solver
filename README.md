@@ -1,4 +1,4 @@
-# pso_solver
+# pso-solver
 A package that implements the particle swarm optimization algorithm.
 Particle swarm optimization (PSO) is a computational technique used to find the global optimum of a function,
 introduced in 1995 by Kennedy and Eberhardt.
@@ -36,14 +36,30 @@ It has 4 minima:
 * (3.58, -1.85)
 * (3, 2)
 
+The value of the function at each of the 4 minima is 0.
+
+To obtain the above minima, use seed=1, seed=7, seed=3, seed=4, respectively, for 10 particles.
+
 10 particles, c1=1, c2=1, W=0.5
 
-<img src="https://github.com/nikhilkmr300/pso_solver/blob/master/images/himmelblau_1.png" width="320" height="240"><img src="https://github.com/nikhilkmr300/pso_solver/blob/master/images/himmelblau_3.png" width="320" height="240">
-<img src="https://github.com/nikhilkmr300/pso_solver/blob/master/images/himmelblau_4.png" width="320" height="240"><img src="https://github.com/nikhilkmr300/pso_solver/blob/master/images/himmelblau_7.png" width="320" height="240">
+<img src="https://github.com/nikhilkmr300/pso_solver/blob/master/images/himmelblau_1.png" width="320" height="240"><img src="https://github.com/nikhilkmr300/pso_solver/blob/master/images/himmelblau_3.png" width="320" height="240"><img src="https://github.com/nikhilkmr300/pso_solver/blob/master/images/himmelblau_4.png" width="320" height="240"><img src="https://github.com/nikhilkmr300/pso_solver/blob/master/images/himmelblau_7.png" width="320" height="240">
 
 Particles approaching each of the 4 minima of the Himmelblau function.
 
 Reference: https://en.wikipedia.org/wiki/Himmelblau%27s_function
+
+## Rosenbrock function
+
+The Rosenbrock function is defined by <img src="/tex/b9d5c6a89f05e25ab6edbe87400354fd.svg?invert_in_darkmode&sanitize=true" align=middle width=518.2721181pt height=26.76175259999998pt/>.
+It has 1 minimum at (1, 1, 1). The value of the function at the minimum is 0.
+
+100 particles, c1=1, c2=1, W=0.5
+
+<img src="https://github.com/nikhilkmr300/pso_solver/blob/master/images/rosenbrock.png" width="320" height="240">
+
+Particles approaching the minimum of the Rosenbrock function.
+
+Reference: Momin, J. A. M. I. L., & Yang, X. S. (2013). A literature survey of benchmark functions for global optimization problems. Journal of Mathematical Modelling and Numerical Optimisation, 4(2), 150-194.
 
 # Installation
 Install `pip` if you do not have it already. Refer https://pip.pypa.io/en/stable/installing/.
@@ -57,6 +73,7 @@ pBestPos of each particle is initialized to position passed in the list.
 * pso: Finds minimum or maximum (set maxFlag to True) of function f using the PSO algorithm.
 * psoVisualizeUnivariate: Finds minimum or maximum (set maxFlag to True) of function f of 1 variable using the PSO algorithm and provides a nice visualization of the motion of the particles.
 * psoVisualizeBivariate: Finds minimum or maximum (set maxFlag to True) of function f of 2 variables using the PSO algorithm and provides a nice visualization of the motion of the particles.
+* psoVisualizeTrivariate: Finds minimum or maximum (set maxFlag to True) of function f of 3 variables using the PSO algorithm and provides a nice visualization of the motion of the particles.
 * setSeed: Sets seed for random number generators.
 Use this function to set the seed in your program before calling any function that uses a PRNG if you want to get reproducible results.
 
