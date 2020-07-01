@@ -1,5 +1,6 @@
 import math
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 import random
 from tqdm import tqdm
@@ -327,7 +328,7 @@ def generatePlotUnivariate(particleList, f, xlower, xupper, density=100, fColor=
         function, think of this as resolution, higher the density, more the
         points taken to plot the function.
     fColor (str, optional): Color to be used for plotting the function.
-    particleColor (str, optional): Colour in which to plot particles.
+    particleColor (str, optional): Color in which to plot particles.
 
     Returns:
     tuple: Tuple of matplotlib.pyplot.Figure() object and matplotlib.axes.Axes()
@@ -376,7 +377,7 @@ def displayPlotUnivariate(particleList, f, xlower, xupper, sleepTime=0.1, densit
     fig, ax = generatePlotUnivariate(particleList, f, xlower, xupper, density=density, fColor=fColor, particleColor=particleColor)
 
     # Displaying plot
-    plt.show(block=False)
+    plt.show(block=False)   # block=False to avoid the plot GUI from blocking and to allow program to continue following iterations.
 
     # Waiting for sleepTime milliseconds before plotting next iteration
     plt.pause(sleepTime)
@@ -448,7 +449,7 @@ def generatePlotBivariate(particleList, f, xlower, xupper, ylower, yupper, densi
       contour plot.
     cmap (str or matplotlib.pyplot.Colormap, optional): Colormap to be used for the
         contour plot.
-    particleColor (str, optional): Colour in which to plot particles.
+    particleColor (str, optional): Color in which to plot particles.
 
     Returns:
     tuple: Tuple of matplotlib.pyplot.Figure() object and matplotlib.axes.Axes()
@@ -498,7 +499,7 @@ def displayPlotBivariate(particleList, f, xlower, xupper, ylower, yupper, sleepT
     fig, ax = generatePlotBivariate(particleList, f, xlower, xupper, ylower, yupper, density=density, cmap=cmap, particleColor=particleColor)
 
     # Displaying plot
-    plt.show(block=False)
+    plt.show(block=False)   # block=False to avoid the plot GUI from blocking and to allow program to continue following iterations.
 
     # Waiting for sleepTime milliseconds before plotting next iteration
     plt.pause(sleepTime)
@@ -545,6 +546,126 @@ def psoVisualizeBivariate(particleList, f, xlower, xupper, ylower, yupper, c1=1,
             # Taking a step of the PSO algorithm
             particleList = pso_step(particleList, f, c1=c1, c2=c2, W=W, maxFlag=maxFlag, accuracy=accuracy)
             displayPlotBivariate(particleList, f, xlower, xupper, ylower, yupper, sleepTime=sleepTime, density=density, cmap=cmap, particleColor=particleColor)
+
+    if(maxFlag == False):
+        print('(minimum, minimimumValue):\t', end='')
+        printGBestPos(particleList, f, maxFlag=False, accuracy=accuracy)
+    elif(maxFlag == True):
+        print('(maximum, maximumValue):\t', end='')
+        printGBestPos(particleList, f, maxFlag=True, accuracy=accuracy)
+
+def generatePlotTrivariate(particleList, f, xlower, xupper, ylower, yupper, zlower, zupper, density=100, cmap='Blues', particleColor='r'):
+    """
+    Generates scatter plot of particles. Cannot visualize f as a function of x,
+    y and z as that would require 4 dimensions.
+
+    Parameters:
+    particleList (list): A list of particles, must be initialized before feeding
+        into this function.
+    f (lambda): Function to be globally minimized/maximized.
+    xlower (float): Lower bound for x-axis in plot.
+    xupper (float): Upper bound for x-axis in plot.
+    ylower (float): Lower bound for y-axis in plot.
+    yupper (float): Upper bound for y-axis in plot.
+    zlower (float): Lower bound for z-azis in plot.
+    zupper (float): Upper bound for z-azis in plot.
+    density (int, optional): Density of points to take for the contour plot, think of this
+      as resolution, higher the density, more the points taken to plot the
+      contour plot.
+    cmap (str or matplotlib.pyplot.Colormap, optional): Colormap to be used for the
+        contour plot.
+    particleColor (str, optional): Color in which to plot particles.
+
+    Returns:
+    tuple: Tuple of matplotlib.pyplot.Figure() object and matplotlib.axes.Axes()
+        object
+    """
+
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+
+    # Plotting particles
+    currPosList = extractCurrPos(particleList)
+    particleX = [position[0] for position in currPosList]
+    particleY = [position[1] for position in currPosList]
+    particleZ = [position[2] for position in currPosList]
+    ax.scatter(particleX, particleY, particleZ, zdir='z', s=20, c=particleColor, depthshade=True)
+
+    # Setting axes labels and axes limits
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+    ax.set_zlabel('z')
+    ax.set_xlim(xlower, xupper)
+    ax.set_ylim(ylower, yupper)
+    ax.set_zlim(zlower, zupper)
+
+    return fig, ax
+
+def displayPlotTrivariate(particleList, f, xlower, xupper, ylower, yupper, zlower, zupper, sleepTime=0.1, density=100, cmap='Blues', particleColor='r'):
+    """
+    Displays scatter plot of particles and contour plot of f created by
+    generatePlotTrivariate.
+
+    Parameters:
+    Same as for generatePlotTrivariate.
+    sleepTime (float, optional): Time in milliseconds to wait between plotting
+        successive iterations of the PSO algorithm.
+
+    Returns:
+    None
+    """
+
+    # Generating the plot
+    fig, ax = generatePlotTrivariate(particleList, f, xlower, xupper, ylower, yupper, zlower, zupper, particleColor=particleColor)
+
+    # Displaying plot
+    plt.show(block=False)   # block=False to avoid the plot GUI from blocking and to allow program to continue following iterations.
+
+    # Waiting for sleepTime milliseconds before plotting next iteration
+    plt.pause(sleepTime)
+    plt.close()
+
+def psoVisualizeTrivariate(particleList, f, xlower, xupper, ylower, yupper, zlower, zupper, c1=1, c2=1, W=0.5, numIters=10, maxFlag=False, sleepTime=0.1, density=100, cmap='Blues', particleColor='r', accuracy=2, verbose=False):
+    """
+    Finds minimum or maximum (set maxFlag to True) of function f of 3 variables
+    using the PSO algorithm and provides a nice visualization of the motion of
+    the particles.
+
+    Parameters:
+    Same as for pso and displayPlotTrivariate.
+
+    Returns:
+    None
+    """
+
+    if(len(signature(f).parameters) != 3):
+        print('Error: psoVisualizeTrivariate accepts only functions of 3 variables.')
+        sys.exit()
+
+    print(f'Particle swarm optimization, {len(particleList)} particles, {numIters} iterations:')
+    print('-' * 10)
+
+    # Taking numIters number of steps of the PSO algorithm (verbose)
+    if(verbose == True):
+        # Printing initial state
+        print('Initial state:')
+        printParticleListBrief(particleList, f, accuracy=accuracy)
+        print('-' * 10)
+        # Taking numIters number of steps of the PSO algorithm (verbose)
+        for i in range(numIters):
+            print(f'Iteration {(i + 1)}/{numIters}:')
+            # Taking a step of the PSO algorithm
+            particleList = pso_step(particleList, f, c1=c1, c2=c2, W=W, maxFlag=maxFlag, accuracy=accuracy)
+            # Printing summary of current iteration
+            printParticleListBrief(particleList, f, maxFlag=maxFlag, accuracy=accuracy)
+            print('-' * 10)
+            displayPlotTrivariate(particleList, f, xlower, xupper, ylower, yupper, zlower, zupper, sleepTime=sleepTime, particleColor=particleColor)
+    # Taking numIters number of steps of the PSO algorithm (not verbose)
+    elif(verbose == False):
+        for i in tqdm(range(numIters)):
+            # Taking a step of the PSO algorithm
+            particleList = pso_step(particleList, f, c1=c1, c2=c2, W=W, maxFlag=maxFlag, accuracy=accuracy)
+            displayPlotTrivariate(particleList, f, xlower, xupper, ylower, yupper, zlower, zupper, sleepTime=sleepTime, particleColor=particleColor)
 
     if(maxFlag == False):
         print('(minimum, minimimumValue):\t', end='')

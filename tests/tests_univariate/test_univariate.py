@@ -11,4 +11,4 @@ particleList = pso_solver.createRandomParticleList(1, numParticles=10, lower=low
 # Testing on a univariate function
 f = lambda x: np.cos(x)
 
-pso_solver.psoVisualizeUnivariate(particleList, f, xlower, xupper, c1=1, c2=1, W=0.5, numIters=30, maxFlag=True, sleepTime=0.1, density=100, fColor='b', particleColor='r', accuracy=2, verbose=False)
+pso_solver.psoVisualizeUnivariate(particleList, f, xlower, xupper, c1=1, c2=1, W=0.5, numIters=30, maxFlag=False, sleepTime=0.1, density=100, fColor='b', particleColor='r', accuracy=2, verbose=False)
