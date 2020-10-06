@@ -18,16 +18,16 @@ Selecting the best parameters c1, c2 and W is experimental, and has to be done t
 Reference:
 Eberhart, R., & Kennedy, J. (1995, November). Particle swarm optimization. In Proceedings of the IEEE international conference on neural networks (Vol. 4, pp. 1942-1948). Citeseer.
 
-# Examples
+## Examples
 
-## Cosine function
+### Cosine function
 10 particles, c1=1, c2=1, W=0.5
 
 <img src="https://github.com/nikhilkmr300/pso_solver/blob/master/images/cosine.png" width="320" height="240">
 
 Particles approaching the minimum of the cosine function in the range 0 to 2<img src="/tex/f30fdded685c83b0e7b446aa9c9aa120.svg?invert_in_darkmode&sanitize=true" align=middle width=9.96010619999999pt height=14.15524440000002pt/>.
 
-## Himmelblau function
+### Himmelblau function
 
 The Himmelblau function is defined by <img src="/tex/ba8b638e550005abe23a2205683ba34e.svg?invert_in_darkmode&sanitize=true" align=middle width=285.31931999999995pt height=26.76175259999998pt/>.
 It has 4 minima:
@@ -48,7 +48,7 @@ Particles approaching each of the 4 minima of the Himmelblau function.
 
 Reference: https://en.wikipedia.org/wiki/Himmelblau%27s_function
 
-## Rosenbrock function
+### Rosenbrock function
 
 The Rosenbrock function is defined by <img src="/tex/b9d5c6a89f05e25ab6edbe87400354fd.svg?invert_in_darkmode&sanitize=true" align=middle width=518.2721181pt height=26.76175259999998pt/>.
 It has 1 minimum at (1, 1, 1). The value of the function at the minimum is 0.
@@ -61,11 +61,11 @@ Particles approaching the minimum of the Rosenbrock function.
 
 Reference: Momin, J. A. M. I. L., & Yang, X. S. (2013). A literature survey of benchmark functions for global optimization problems. Journal of Mathematical Modelling and Numerical Optimisation, 4(2), 150-194.
 
-# Installation
+## Installation
 Install `pip` if you do not have it already. Refer https://pip.pypa.io/en/stable/installing/.
 Use the command `pip install pso-solver` to install the package.
 
-# Description of functions
+## Description of functions
 Here is a description of the functions that you might want to use in your code:
 * createParticleList: Takes a list of initial positions and returns a list of particles in particleList initialized to those positions.
 pBestPos of each particle is initialized to position passed in the list.
